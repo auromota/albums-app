@@ -9,7 +9,18 @@ import { AlbumService } from '../services/album.service';
 export class AlbumComponent {
 
     @Input()
-    album: any;
+    get album(): any {
+        return this._album;
+    }
+    set album(album: any) {
+        this._album = album;
+        this.photos = album.data
+            .sort((a, b) => b.id - a.id)
+            .slice(0, 2);
+    }
+    _album: any;
+
+    photos: any;
 
     constructor(
         private service: AlbumService,
